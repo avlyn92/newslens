@@ -13,10 +13,13 @@ const STORAGE_KEY_GUARDIAN = 'newslens_guardian_key';
 const STORAGE_KEY_OPENAI   = 'newslens_openai_key';
 const REFRESH_INTERVAL_MS  = 5 * 60 * 1000;
 
+const ENV_GUARDIAN_KEY = import.meta.env.VITE_GUARDIAN_KEY as string | undefined;
+const ENV_OPENAI_KEY   = import.meta.env.VITE_OPENAI_KEY   as string | undefined;
+
 export default function App() {
-  const [guardianKey, setGuardianKey] = useState(() => localStorage.getItem(STORAGE_KEY_GUARDIAN) || '');
-  const [openaiKey,   setOpenaiKey]   = useState(() => localStorage.getItem(STORAGE_KEY_OPENAI)   || '');
-  const [isSetup, setIsSetup]         = useState(() => !!localStorage.getItem(STORAGE_KEY_GUARDIAN));
+  const [guardianKey, setGuardianKey] = useState(() => localStorage.getItem(STORAGE_KEY_GUARDIAN) || ENV_GUARDIAN_KEY || '');
+  const [openaiKey,   setOpenaiKey]   = useState(() => localStorage.getItem(STORAGE_KEY_OPENAI)   || ENV_OPENAI_KEY   || '');
+  const [isSetup, setIsSetup]         = useState(() => !!(localStorage.getItem(STORAGE_KEY_GUARDIAN) || ENV_GUARDIAN_KEY));
 
   const [articles,      setArticles]      = useState<Article[]>([]);
   const [loading,       setLoading]       = useState(false);
